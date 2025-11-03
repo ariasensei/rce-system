@@ -1,0 +1,3467 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redeemed Citadel Integrated Education System</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100%;
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-box h1 {
+            color: #2d5016;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .login-btn {
+            background: #2d5016;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #1a2f0c;
+        }
+
+        .dashboard {
+            display: none;
+            height: 100%;
+            background: #f5f7fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .datetime {
+            font-size: 14px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        .main-container {
+            display: flex;
+            height: calc(100% - 80px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            padding: 15px 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item:hover {
+            background: #f0f8f0;
+            border-left-color: #2d5016;
+        }
+
+        .nav-item.active {
+            background: #e8f5e8;
+            border-left-color: #2d5016;
+            color: #2d5016;
+            font-weight: bold;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .module-title {
+            font-size: 28px;
+            color: #2d5016;
+            margin: 0;
+        }
+
+        .btn {
+            background: #2d5016;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: #1a2f0c;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2d5016;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            background: #2d5016;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .close {
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2d5016;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .invoice-items {
+            margin: 20px 0;
+        }
+
+        .invoice-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .print-section {
+            background: white;
+            padding: 40px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .print-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #2d5016;
+            padding-bottom: 20px;
+        }
+
+        .print-header h1 {
+            color: #2d5016;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .print-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            .print-section {
+                box-shadow: none;
+                margin: 0;
+                padding: 20px;
+            }
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border: 1px solid #c3e6cb;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #2d5016;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .confirmation-modal {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            margin: 20% auto;
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Login Screen -->
+  <div id="loginScreen" class="login-container">
+   <div class="login-box">
+    <h1>🏫 Redeemed Citadel<br>
+     Integrated Education System</h1><input type="password" id="passwordInput" placeholder="Enter Access Code" maxlength="20"> <button class="login-btn" onclick="login()">Access System</button>
+    <div id="loginError" class="error-message" style="display: none;">
+     Invalid access code. Please try again.
+    </div>
+   </div>
+  </div><!-- Main Dashboard -->
+  <div id="dashboard" class="dashboard">
+   <header class="header">
+    <h1 id="systemTitle">🏫 Redeemed Citadel Integrated Education System</h1>
+    <div class="datetime" id="datetime"></div>
+   </header>
+   <div class="main-container">
+    <nav class="sidebar no-print">
+     <div class="nav-item active" onclick="showModule('home')">
+      🏠 Home
+     </div>
+     <div class="nav-item" onclick="showModule('students')">
+      🧑‍🎓 Students
+     </div>
+     <div class="nav-item" onclick="showModule('invoice')">
+      💰 Invoice
+     </div>
+     <div class="nav-item" onclick="showModule('employees')">
+      👥 Employee
+     </div>
+     <div class="nav-item" onclick="showModule('payroll')">
+      👩‍💼 Payroll
+     </div>
+     <div class="nav-item" onclick="showModule('inventory')">
+      📦 Inventory
+     </div>
+     <div class="nav-item" onclick="showModule('bookkeeping')">
+      📚 Bookkeeping
+     </div>
+     <div class="nav-item" onclick="showModule('reports')">
+      📊 Reports
+     </div>
+     <div class="nav-item" onclick="logout()">
+      🚪 Logout
+     </div>
+    </nav>
+    <main class="content"><!-- Home Module -->
+     <div id="homeModule" class="module">
+      <div class="module-header">
+       <h2 class="module-title">Dashboard Overview</h2>
+      </div>
+      <div class="stats-grid">
+       <div class="stat-card">
+        <div class="stat-number" id="totalStudents">
+         0
+        </div>
+        <div class="stat-label">
+         Total Students
+        </div>
+       </div>
+       <div class="stat-card">
+        <div class="stat-number" id="totalEmployees">
+         0
+        </div>
+        <div class="stat-label">
+         Total Employees
+        </div>
+       </div>
+       <div class="stat-card">
+        <div class="stat-number" id="totalInvoices">
+         0
+        </div>
+        <div class="stat-label">
+         Total Invoices
+        </div>
+       </div>
+       <div class="stat-card">
+        <div class="stat-number" id="totalInventory">
+         0
+        </div>
+        <div class="stat-label">
+         Inventory Items
+        </div>
+       </div>
+      </div>
+      <div class="table-container">
+       <h3 style="padding: 20px; margin: 0; background: #f8f9fa; border-bottom: 1px solid #ddd;">Recent Activities</h3>
+       <table class="table">
+        <thead>
+         <tr>
+          <th>Date</th>
+          <th>Activity</th>
+          <th>Module</th>
+          <th>Status</th>
+         </tr>
+        </thead>
+        <tbody id="recentActivities">
+         <tr>
+          <td colspan="4" style="text-align: center; padding: 40px; color: #666;">Welcome to the system! Activities will appear here as you use the modules.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Students Module -->
+     <div id="studentsModule" class="module" style="display: none;">
+      <div class="module-header">
+       <h2 class="module-title">Student Management</h2>
+       <div><button class="btn" onclick="openStudentModal()">➕ Add Student</button> <button class="btn btn-secondary" onclick="printStudents()">🖨️ Print List</button>
+       </div>
+      </div><input type="text" class="search-bar" id="studentSearch" placeholder="Search by name, ID, or grade level..." onkeyup="searchStudents()">
+      <div class="table-container">
+       <table class="table">
+        <thead>
+         <tr>
+          <th>Student ID</th>
+          <th>Name</th>
+          <th>Grade Level</th>
+          <th>Status</th>
+          <th>Contact</th>
+          <th>Actions</th>
+         </tr>
+        </thead>
+        <tbody id="studentsTable">
+         <tr>
+          <td colspan="6" style="text-align: center; padding: 40px; color: #666;">No students found. Click "Add Student" to get started.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Invoice Module -->
+     <div id="invoiceModule" class="module" style="display: none;">
+      <div class="module-header">
+       <h2 class="module-title">Invoice Generator</h2>
+       <div><button class="btn" onclick="openInvoiceModal()">➕ Create Invoice</button> <button class="btn btn-secondary" onclick="printInvoices()">🖨️ Print Invoices</button>
+       </div>
+      </div><input type="text" class="search-bar" id="invoiceSearch" placeholder="Search by student name or invoice number..." onkeyup="searchInvoices()">
+      <div class="table-container">
+       <table class="table">
+        <thead>
+         <tr>
+          <th>Invoice #</th>
+          <th>Date</th>
+          <th>Student</th>
+          <th>Total Amount</th>
+          <th>Actions</th>
+         </tr>
+        </thead>
+        <tbody id="invoicesTable">
+         <tr>
+          <td colspan="5" style="text-align: center; padding: 40px; color: #666;">No invoices found. Click "Create Invoice" to get started.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Employee Management Module -->
+     <div id="employeesModule" class="module" style="display: none;">
+      <div class="module-header">
+       <h2 class="module-title">Employee</h2>
+       <div><button class="btn" onclick="openEmployeeModal()">➕ Add Employee</button> <button class="btn btn-secondary" onclick="printEmployeeList()">🖨️ Print List</button>
+       </div>
+      </div><input type="text" class="search-bar" id="employeeSearch" placeholder="Search by name, ID, or position..." onkeyup="searchEmployees()">
+      <div class="table-container">
+       <table class="table">
+        <thead>
+         <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Status</th>
+          <th>Contact</th>
+          <th>Actions</th>
+         </tr>
+        </thead>
+        <tbody id="employeesTable">
+         <tr>
+          <td colspan="6" style="text-align: center; padding: 40px; color: #666;">No employees found. Click "Add Employee" to get started.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Payroll Module -->
+     <div id="payrollModule" class="module" style="display: none;">
+      <div class="module-header">
+       <h2 class="module-title">Payroll System</h2>
+       <div><button class="btn" onclick="openPayrollModal()">➕ Create Payroll</button> <button class="btn btn-secondary" onclick="printPayroll()">🖨️ Print Payroll</button>
+       </div>
+      </div><input type="text" class="search-bar" id="payrollSearch" placeholder="Search by employee name or ID..." onkeyup="searchPayroll()">
+      <div class="table-container">
+       <table class="table">
+        <thead>
+         <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Rate</th>
+          <th>Net Pay</th>
+          <th>Actions</th>
+         </tr>
+        </thead>
+        <tbody id="payrollTable">
+         <tr>
+          <td colspan="6" style="text-align: center; padding: 40px; color: #666;">No payroll records found. Click "Create Payroll" to get started.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Inventory Module -->
+     <div id="inventoryModule" class="module" style="display: none;">
+      <div class="module-header">
+       <h2 class="module-title">Inventory Management</h2>
+       <div><button class="btn" onclick="openInventoryModal()">➕ Add Item</button> <button class="btn btn-secondary" onclick="printInventory()">🖨️ Print Inventory</button>
+       </div>
+      </div><input type="text" class="search-bar" id="inventorySearch" placeholder="Search by item name or supplier..." onkeyup="searchInventory()">
+      <div class="table-container">
+       <table class="table">
+        <thead>
+         <tr>
+          <th>Item Name</th>
+          <th>Quantity</th>
+          <th>Supplier</th>
+          <th>Cost</th>
+          <th>Status</th>
+          <th>Actions</th>
+         </tr>
+        </thead>
+        <tbody id="inventoryTable">
+         <tr>
+          <td colspan="6" style="text-align: center; padding: 40px; color: #666;">No inventory items found. Click "Add Item" to get started.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Bookkeeping Module -->
+     <div id="bookkeepingModule" class="module" style="display: none;">
+      <div class="module-header">
+       <h2 class="module-title">Bookkeeping System</h2>
+       <div><button class="btn" onclick="openBookkeepingModal()">➕ Add Entry</button> <button class="btn btn-secondary" onclick="printBookkeeping()">🖨️ Print Records</button>
+       </div>
+      </div>
+      <div style="display: flex; gap: 15px; margin-bottom: 20px;"><select id="categoryFilter" onchange="filterBookkeeping()" style="padding: 10px; border-radius: 6px; border: 2px solid #ddd;"> <option value="">All Categories</option> <option value="Tuition">Tuition</option> <option value="Miscellaneous">Miscellaneous</option> <option value="Donations">Donations</option> <option value="Payroll">Payroll</option> <option value="Maintenance">Maintenance</option> <option value="Utilities">Utilities</option> </select> <input type="month" id="monthFilter" onchange="filterBookkeeping()" style="padding: 10px; border-radius: 6px; border: 2px solid #ddd;">
+      </div>
+      <div class="table-container">
+       <table class="table">
+        <thead>
+         <tr>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Type</th>
+          <th>Actions</th>
+         </tr>
+        </thead>
+        <tbody id="bookkeepingTable">
+         <tr>
+          <td colspan="6" style="text-align: center; padding: 40px; color: #666;">No bookkeeping entries found. Click "Add Entry" to get started.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Reports Module -->
+     <div id="reportsModule" class="module" style="display: none;">
+      <div class="module-header">
+       <h2 class="module-title">Reports Dashboard</h2><button class="btn btn-secondary" onclick="printReports()">🖨️ Print Reports</button>
+      </div>
+      <div class="stats-grid">
+       <div class="stat-card">
+        <div class="stat-number" id="reportStudents">
+         0
+        </div>
+        <div class="stat-label">
+         Active Students
+        </div>
+       </div>
+       <div class="stat-card">
+        <div class="stat-number" id="reportRevenue">
+         ₱0
+        </div>
+        <div class="stat-label">
+         Monthly Revenue
+        </div>
+       </div>
+       <div class="stat-card">
+        <div class="stat-number" id="reportExpenses">
+         ₱0
+        </div>
+        <div class="stat-label">
+         Monthly Expenses
+        </div>
+       </div>
+       <div class="stat-card">
+        <div class="stat-number" id="reportProfit">
+         ₱0
+        </div>
+        <div class="stat-label">
+         Net Profit
+        </div>
+       </div>
+      </div>
+      <div class="table-container">
+       <h3 style="padding: 20px; margin: 0; background: #f8f9fa; border-bottom: 1px solid #ddd;">Financial Summary</h3>
+       <table class="table">
+        <thead>
+         <tr>
+          <th>Category</th>
+          <th>This Month</th>
+          <th>Last Month</th>
+          <th>Change</th>
+         </tr>
+        </thead>
+        <tbody id="financialSummary">
+         <tr>
+          <td>Tuition Income</td>
+          <td id="tuitionThisMonth">₱0</td>
+          <td id="tuitionLastMonth">₱0</td>
+          <td id="tuitionChange">0%</td>
+         </tr>
+         <tr>
+          <td>Total Expenses</td>
+          <td id="expensesThisMonth">₱0</td>
+          <td id="expensesLastMonth">₱0</td>
+          <td id="expensesChange">0%</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </main>
+   </div>
+  </div><!-- Student Modal -->
+  <div id="studentModal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h3 id="studentModalTitle">Add New Student</h3><span class="close" onclick="closeModal('studentModal')">×</span>
+    </div>
+    <form id="studentForm">
+     <div class="form-grid">
+      <div class="form-group"><label>Student ID</label> <input type="text" id="studentId" required>
+      </div>
+      <div class="form-group"><label>Last Name</label> <input type="text" id="lastName" required>
+      </div>
+      <div class="form-group"><label>First Name</label> <input type="text" id="firstName" required>
+      </div>
+      <div class="form-group"><label>Middle Name</label> <input type="text" id="middleName">
+      </div>
+      <div class="form-group"><label>LRN</label> <input type="text" id="lrn">
+      </div>
+      <div class="form-group"><label>First Year Attended</label> <input type="text" id="firstYearAttended">
+      </div>
+      <div class="form-group"><label>Grade Level</label> <select id="gradeLevel" required> <option value="">Select Grade</option> <option value="Kindergarten">Kindergarten</option> <option value="Grade 1">Grade 1</option> <option value="Grade 2">Grade 2</option> <option value="Grade 3">Grade 3</option> <option value="Grade 4">Grade 4</option> <option value="Grade 5">Grade 5</option> <option value="Grade 6">Grade 6</option> <option value="Grade 7">Grade 7</option> <option value="Grade 8">Grade 8</option> <option value="Grade 9">Grade 9</option> <option value="Grade 10">Grade 10</option> <option value="Grade 11">Grade 11</option> <option value="Grade 12">Grade 12</option> </select>
+      </div>
+      <div class="form-group"><label>Status</label> <select id="status" required> <option value="">Select Status</option> <option value="Active">Active</option> <option value="Inactive">Inactive</option> <option value="Transferee">Transferee</option> <option value="Alumni">Alumni</option> </select>
+      </div>
+      <div class="form-group"><label>Gender</label> <select id="gender" required> <option value="">Select Gender</option> <option value="Male">Male</option> <option value="Female">Female</option> </select>
+      </div>
+      <div class="form-group"><label>Age</label> <input type="number" id="age" min="3" max="25">
+      </div>
+      <div class="form-group"><label>Birthdate</label> <input type="date" id="birthdate">
+      </div>
+      <div class="form-group"><label>Contact Info</label> <input type="text" id="contactInfo">
+      </div>
+      <div class="form-group"><label>Address</label> <textarea id="address" rows="3"></textarea>
+      </div>
+      <div class="form-group"><label>Parent/Guardian Name</label> <input type="text" id="parentGuardian">
+      </div>
+      <div class="form-group"><label>Emergency Contact</label> <input type="text" id="emergencyContact">
+      </div>
+      <div class="form-group" style="grid-column: 1 / -1;"><label>Memo</label> <textarea id="memo" rows="3"></textarea>
+      </div>
+     </div>
+     <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px;"><button type="button" class="btn btn-secondary" onclick="closeModal('studentModal')">Cancel</button> <button type="submit" class="btn" id="saveStudentBtn"> <span class="btn-text">Save Student</span> <span class="loading" style="display: none;"></span> </button>
+     </div>
+    </form>
+   </div>
+  </div><!-- Invoice Modal -->
+  <div id="invoiceModal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h3>Create Invoice</h3><span class="close" onclick="closeModal('invoiceModal')">×</span>
+    </div>
+    <form id="invoiceForm">
+     <div class="form-grid">
+      <div class="form-group"><label>Invoice Number</label> <input type="text" id="invoiceNumber" readonly>
+      </div>
+      <div class="form-group"><label>Date</label> <input type="date" id="invoiceDate" required>
+      </div>
+      <div class="form-group" style="grid-column: 1 / -1;"><label>Student</label> <select id="invoiceStudent" required> <option value="">Select Student</option> </select>
+      </div>
+     </div>
+     <h4>Invoice Items</h4>
+     <div class="invoice-items" id="invoiceItems">
+      <div class="invoice-item"><select class="item-description" required> <option value="">Select Fee Type</option> <option value="Tuition Fee">Tuition Fee</option> <option value="Books">Books</option> <option value="Uniform">Uniform</option> <option value="Miscellaneous">Miscellaneous</option> <option value="Registration Fee">Registration Fee</option> <option value="Laboratory Fee">Laboratory Fee</option> <option value="Library Fee">Library Fee</option> <option value="ID Fee">ID Fee</option> <option value="Transportation">Transportation</option> <option value="Other">Other</option> </select> <input type="number" placeholder="Amount" class="item-amount" step="0.01" min="0" required> <button type="button" class="btn btn-danger" onclick="removeInvoiceItem(this)">Remove</button>
+      </div>
+     </div><button type="button" class="btn btn-secondary" onclick="addInvoiceItem()">Add Item</button>
+     <div style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px;"><strong>Total Amount: ₱<span id="invoiceTotal">0.00</span></strong>
+     </div>
+     <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px;"><button type="button" class="btn btn-secondary" onclick="closeModal('invoiceModal')">Cancel</button> <button type="submit" class="btn" id="saveInvoiceBtn"> <span class="btn-text">Save Invoice</span> <span class="loading" style="display: none;"></span> </button>
+     </div>
+    </form>
+   </div>
+  </div><!-- Employee Management Modal -->
+  <div id="employeeModal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h3 id="employeeModalTitle">Add New Employee</h3><span class="close" onclick="closeModal('employeeModal')">×</span>
+    </div>
+    <form id="employeeForm">
+     <div class="form-grid">
+      <div class="form-group"><label>Employee ID</label> <input type="text" id="empId" required>
+      </div>
+      <div class="form-group"><label>Last Name</label> <input type="text" id="empLastName" required>
+      </div>
+      <div class="form-group"><label>First Name</label> <input type="text" id="empFirstName" required>
+      </div>
+      <div class="form-group"><label>Middle Name</label> <input type="text" id="empMiddleName">
+      </div>
+      <div class="form-group"><label>Date Hired</label> <input type="date" id="dateHired" required>
+      </div>
+      <div class="form-group"><label>Status</label> <select id="empStatus" required> <option value="">Select Status</option> <option value="Provisionary">Provisionary</option> <option value="Contractual">Contractual</option> <option value="Regular">Regular</option> </select>
+      </div>
+      <div class="form-group"><label>Designation/Position</label> <input type="text" id="empPosition" required>
+      </div>
+      <div class="form-group"><label>Gender</label> <select id="empGender" required> <option value="">Select Gender</option> <option value="Male">Male</option> <option value="Female">Female</option> </select>
+      </div>
+      <div class="form-group"><label>Civil Status</label> <select id="civilStatus" required> <option value="">Select Civil Status</option> <option value="Single">Single</option> <option value="Married">Married</option> <option value="Divorced">Divorced</option> <option value="Widowed">Widowed</option> </select>
+      </div>
+      <div class="form-group"><label>Date of Birth</label> <input type="date" id="empDateOfBirth">
+      </div>
+      <div class="form-group"><label>Contact Number</label> <input type="text" id="empContactNumber" required>
+      </div>
+      <div class="form-group"><label>Email Address</label> <input type="email" id="empEmailAddress" required>
+      </div>
+      <div class="form-group"><label>Emergency Contact</label> <input type="text" id="empEmergencyContact">
+      </div>
+      <div class="form-group"><label>TIN</label> <input type="text" id="empTin">
+      </div>
+      <div class="form-group"><label>SSS</label> <input type="text" id="empSss">
+      </div>
+      <div class="form-group"><label>Pag-IBIG Number</label> <input type="text" id="empPagibig">
+      </div>
+      <div class="form-group"><label>PhilHealth No.</label> <input type="text" id="empPhilhealth">
+      </div>
+      <div class="form-group" style="grid-column: 1 / -1;"><label>Address</label> <textarea id="empAddress" rows="3" required></textarea>
+      </div>
+     </div>
+     <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px;"><button type="button" class="btn btn-secondary" onclick="closeModal('employeeModal')">Cancel</button> <button type="submit" class="btn" id="saveEmployeeBtn"> <span class="btn-text">Save Employee</span> <span class="loading" style="display: none;"></span> </button>
+     </div>
+    </form>
+   </div>
+  </div><!-- Payroll Modal -->
+  <div id="payrollModal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h3 id="payrollModalTitle">Create Payroll</h3><span class="close" onclick="closeModal('payrollModal')">×</span>
+    </div>
+    <form id="payrollForm">
+     <div class="form-grid">
+      <div class="form-group"><label>Employee ID</label> <input type="text" id="payrollEmployeeId" placeholder="Enter Employee ID" onblur="searchEmployeeForPayroll()" required>
+      </div>
+      <div class="form-group"><label>Name</label> <input type="text" id="payrollEmployeeName" readonly>
+      </div>
+      <div class="form-group"><label>Position</label> <input type="text" id="payrollPosition" readonly>
+      </div>
+      <div class="form-group"><label>Email Address</label> <input type="email" id="payrollEmailAddress" readonly>
+      </div>
+      <div class="form-group"><label>Monthly Salary</label> <input type="number" id="monthlySalary" step="0.01" min="0" required>
+      </div>
+      <div class="form-group"><label>Bi-Weekly Rate (Auto-calculated)</label> <input type="number" id="rate" step="0.01" min="0" readonly>
+      </div>
+      <div class="form-group"><label>SSS Deduction</label> <input type="number" id="sssDeduction" step="0.01" min="0" value="0">
+      </div>
+      <div class="form-group"><label>Pag-IBIG Deduction</label> <input type="number" id="pagibigDeduction" step="0.01" min="0" value="0">
+      </div>
+      <div class="form-group"><label>PhilHealth Deduction</label> <input type="number" id="philhealthDeduction" step="0.01" min="0" value="0">
+      </div>
+      <div class="form-group"><label>Other Deductions</label> <input type="number" id="otherDeductions" step="0.01" min="0" value="0">
+      </div>
+      <div class="form-group"><label>Allowances</label> <input type="number" id="allowances" step="0.01" min="0" value="0">
+      </div>
+      <div class="form-group"><label>Pay Date (Bi-Weekly)</label> <input type="date" id="payPeriod" required>
+      </div>
+     </div>
+     <div style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px;"><strong>Net Pay: ₱<span id="netPayDisplay">0.00</span></strong>
+     </div>
+     <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px;"><button type="button" class="btn btn-secondary" onclick="closeModal('payrollModal')">Cancel</button> <button type="submit" class="btn" id="savePayrollBtn"> <span class="btn-text">Save Payroll</span> <span class="loading" style="display: none;"></span> </button> <button type="button" class="btn btn-secondary" onclick="printCurrentPayslip()">🖨️ Print Payslip</button>
+     </div>
+    </form>
+   </div>
+  </div><!-- Inventory Modal -->
+  <div id="inventoryModal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h3 id="inventoryModalTitle">Add Inventory Item</h3><span class="close" onclick="closeModal('inventoryModal')">×</span>
+    </div>
+    <form id="inventoryForm">
+     <div class="form-grid">
+      <div class="form-group"><label>Item Name</label> <input type="text" id="itemName" required>
+      </div>
+      <div class="form-group"><label>Quantity</label> <input type="number" id="quantity" min="0" required>
+      </div>
+      <div class="form-group"><label>Purchase Date</label> <input type="date" id="purchaseDate" required>
+      </div>
+      <div class="form-group"><label>Supplier</label> <input type="text" id="supplier" required>
+      </div>
+      <div class="form-group"><label>Cost per Unit</label> <input type="number" id="cost" step="0.01" min="0" required>
+      </div>
+      <div class="form-group"><label>Category</label> <select id="itemCategory" required> <option value="">Select Category</option> <option value="School Supplies">School Supplies</option> <option value="Books">Books</option> <option value="Uniforms">Uniforms</option> <option value="Equipment">Equipment</option> <option value="Furniture">Furniture</option> <option value="Other">Other</option> </select>
+      </div>
+     </div>
+     <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px;"><button type="button" class="btn btn-secondary" onclick="closeModal('inventoryModal')">Cancel</button> <button type="submit" class="btn" id="saveInventoryBtn"> <span class="btn-text">Save Item</span> <span class="loading" style="display: none;"></span> </button>
+     </div>
+    </form>
+   </div>
+  </div><!-- Bookkeeping Modal -->
+  <div id="bookkeepingModal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h3 id="bookkeepingModalTitle">Add Bookkeeping Entry</h3><span class="close" onclick="closeModal('bookkeepingModal')">×</span>
+    </div>
+    <form id="bookkeepingForm">
+     <div class="form-grid">
+      <div class="form-group"><label>Date</label> <input type="date" id="entryDate" required>
+      </div>
+      <div class="form-group"><label>Category</label> <select id="entryCategory" required> <option value="">Select Category</option> <option value="Tuition">Tuition</option> <option value="Miscellaneous">Miscellaneous</option> <option value="Donations">Donations</option> <option value="Payroll">Payroll</option> <option value="Maintenance">Maintenance</option> <option value="Utilities">Utilities</option> <option value="Other">Other</option> </select>
+      </div>
+      <div class="form-group"><label>Type</label> <select id="entryType" required> <option value="">Select Type</option> <option value="Income">Income</option> <option value="Expense">Expense</option> </select>
+      </div>
+      <div class="form-group"><label>Amount</label> <input type="number" id="entryAmount" step="0.01" min="0" required>
+      </div>
+      <div class="form-group" style="grid-column: 1 / -1;"><label>Description</label> <textarea id="entryDescription" rows="3" required></textarea>
+      </div>
+     </div>
+     <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px;"><button type="button" class="btn btn-secondary" onclick="closeModal('bookkeepingModal')">Cancel</button> <button type="submit" class="btn" id="saveBookkeepingBtn"> <span class="btn-text">Save Entry</span> <span class="loading" style="display: none;"></span> </button>
+     </div>
+    </form>
+   </div>
+  </div><!-- Employee View Modal -->
+  <div id="employeeViewModal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h3>Employee Details</h3><span class="close" onclick="closeModal('employeeViewModal')">×</span>
+    </div>
+    <div id="employeeViewContent"><!-- Employee details will be populated here -->
+    </div>
+    <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px;"><button class="btn btn-secondary" onclick="closeModal('employeeViewModal')">Close</button> <button class="btn" onclick="printEmployeeFromView()">🖨️ Print Profile</button>
+    </div>
+   </div>
+  </div><!-- Confirmation Modal -->
+  <div id="confirmationModal" class="modal">
+   <div class="confirmation-modal">
+    <h3>Confirm Action</h3>
+    <p id="confirmationMessage">Are you sure you want to proceed?</p>
+    <div class="confirmation-buttons"><button class="btn btn-secondary" onclick="closeModal('confirmationModal')">Cancel</button> <button class="btn btn-danger" id="confirmButton">Confirm</button>
+    </div>
+   </div>
+  </div>
+  <script>
+        // Global variables
+        let currentData = [];
+        let currentEditingId = null;
+        let currentModule = 'home';
+        let invoiceCounter = 1;
+        let currentViewingEmployee = null;
+
+        // Default configuration
+        const defaultConfig = {
+            school_name: "Redeemed Citadel Integrated Education System",
+            school_address: "RCCG Bldg. Narra St. Cardil Village, Del Remedio, San Pablo City, Laguna 4000",
+            school_phone: "049 300 9240",
+            school_email: "rce.educ@gmail.com",
+            footer_message: "Developed for Redeemed Citadel Integrated Education System by Kristina Basa – Empowering Minds, Building the Future."
+        };
+
+        // Data handler for SDK
+        const dataHandler = {
+            onDataChanged(data) {
+                currentData = data;
+                updateCurrentModule();
+                updateDashboardStats();
+            }
+        };
+
+        // Initialize the system
+        async function initializeSystem() {
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                await window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange: async (config) => {
+                        document.getElementById('systemTitle').textContent = `🏫 ${config.school_name || defaultConfig.school_name}`;
+                        updatePrintHeaders();
+                    },
+                    mapToCapabilities: (config) => ({
+                        recolorables: [],
+                        borderables: [],
+                        fontEditable: undefined,
+                        fontSizeable: undefined
+                    }),
+                    mapToEditPanelValues: (config) => new Map([
+                        ["school_name", config.school_name || defaultConfig.school_name],
+                        ["school_address", config.school_address || defaultConfig.school_address],
+                        ["school_phone", config.school_phone || defaultConfig.school_phone],
+                        ["school_email", config.school_email || defaultConfig.school_email],
+                        ["footer_message", config.footer_message || defaultConfig.footer_message]
+                    ])
+                });
+            }
+
+            // Initialize Data SDK
+            if (window.dataSdk) {
+                const result = await window.dataSdk.init(dataHandler);
+                if (!result.isOk) {
+                    console.error("Failed to initialize data SDK");
+                }
+            }
+
+            // Start datetime updates
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+
+            // Generate initial invoice number
+            generateInvoiceNumber();
+        }
+
+        // Login function
+        function login() {
+            const password = document.getElementById('passwordInput').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (password === 'RCE2018') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                errorDiv.style.display = 'none';
+            } else {
+                errorDiv.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        // Logout function
+        function logout() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+        }
+
+        // Update Philippine datetime
+        function updateDateTime() {
+            const now = new Date();
+            const phtTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Manila"}));
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            document.getElementById('datetime').textContent = phtTime.toLocaleDateString('en-US', options) + ' PHT';
+        }
+
+        // Module navigation
+        function showModule(moduleName) {
+            // Hide all modules
+            const modules = document.querySelectorAll('.module');
+            modules.forEach(module => module.style.display = 'none');
+            
+            // Show selected module
+            document.getElementById(moduleName + 'Module').style.display = 'block';
+            
+            // Update navigation
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            currentModule = moduleName;
+            updateCurrentModule();
+        }
+
+        // Update current module display
+        function updateCurrentModule() {
+            switch(currentModule) {
+                case 'students':
+                    displayStudents();
+                    break;
+                case 'employees':
+                    displayEmployees();
+                    break;
+                case 'invoice':
+                    displayInvoices();
+                    populateStudentDropdown();
+                    break;
+                case 'payroll':
+                    displayPayroll();
+                    break;
+                case 'inventory':
+                    displayInventory();
+                    break;
+                case 'bookkeeping':
+                    displayBookkeeping();
+                    break;
+                case 'reports':
+                    displayReports();
+                    break;
+                case 'home':
+                    displayRecentActivities();
+                    break;
+            }
+        }
+
+        // Update dashboard statistics
+        function updateDashboardStats() {
+            const students = currentData.filter(item => item.type === 'student');
+            const employees = currentData.filter(item => item.type === 'employee_management');
+            const payroll = currentData.filter(item => item.type === 'payroll');
+            const invoices = currentData.filter(item => item.type === 'invoice');
+            const inventory = currentData.filter(item => item.type === 'inventory');
+
+            document.getElementById('totalStudents').textContent = students.length;
+            document.getElementById('totalEmployees').textContent = employees.length;
+            document.getElementById('totalInvoices').textContent = invoices.length;
+            document.getElementById('totalInventory').textContent = inventory.length;
+        }
+
+        // Employee Management Functions
+        function openEmployeeModal(employee = null) {
+            currentEditingId = employee ? employee.__backendId : null;
+            document.getElementById('employeeModalTitle').textContent = employee ? 'Edit Employee' : 'Add New Employee';
+            
+            if (employee) {
+                document.getElementById('empId').value = employee.employee_id || '';
+                document.getElementById('empLastName').value = employee.last_name || '';
+                document.getElementById('empFirstName').value = employee.first_name || '';
+                document.getElementById('empMiddleName').value = employee.middle_name || '';
+                document.getElementById('dateHired').value = employee.date_hired || '';
+                document.getElementById('empStatus').value = employee.status || '';
+                document.getElementById('empPosition').value = employee.position || '';
+                document.getElementById('empGender').value = employee.gender || '';
+                document.getElementById('civilStatus').value = employee.civil_status || '';
+                document.getElementById('empDateOfBirth').value = employee.date_of_birth || '';
+                document.getElementById('empContactNumber').value = employee.contact_number || '';
+                document.getElementById('empEmailAddress').value = employee.email_address || '';
+                document.getElementById('empEmergencyContact').value = employee.emergency_contact || '';
+                document.getElementById('empTin').value = employee.tin || '';
+                document.getElementById('empSss').value = employee.sss || '';
+                document.getElementById('empPagibig').value = employee.pagibig || '';
+                document.getElementById('empPhilhealth').value = employee.philhealth || '';
+                document.getElementById('empAddress').value = employee.address || '';
+            } else {
+                document.getElementById('employeeForm').reset();
+            }
+            
+            document.getElementById('employeeModal').style.display = 'block';
+        }
+
+        async function saveEmployee(event) {
+            event.preventDefault();
+            
+            if (currentData.length >= 999 && !currentEditingId) {
+                showMessage('Maximum limit of 999 records reached. Please delete some records first.', 'error');
+                return;
+            }
+
+            const saveBtn = document.getElementById('saveEmployeeBtn');
+            const btnText = saveBtn.querySelector('.btn-text');
+            const loading = saveBtn.querySelector('.loading');
+            
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            saveBtn.disabled = true;
+
+            const employeeData = {
+                type: 'employee_management',
+                employee_id: document.getElementById('empId').value,
+                last_name: document.getElementById('empLastName').value,
+                first_name: document.getElementById('empFirstName').value,
+                middle_name: document.getElementById('empMiddleName').value,
+                date_hired: document.getElementById('dateHired').value,
+                status: document.getElementById('empStatus').value,
+                position: document.getElementById('empPosition').value,
+                gender: document.getElementById('empGender').value,
+                civil_status: document.getElementById('civilStatus').value,
+                date_of_birth: document.getElementById('empDateOfBirth').value,
+                contact_number: document.getElementById('empContactNumber').value,
+                email_address: document.getElementById('empEmailAddress').value,
+                emergency_contact: document.getElementById('empEmergencyContact').value,
+                tin: document.getElementById('empTin').value,
+                sss: document.getElementById('empSss').value,
+                pagibig: document.getElementById('empPagibig').value,
+                philhealth: document.getElementById('empPhilhealth').value,
+                address: document.getElementById('empAddress').value,
+                created_at: new Date().toISOString()
+            };
+
+            let result;
+            if (currentEditingId) {
+                const existingEmployee = currentData.find(item => item.__backendId === currentEditingId);
+                result = await window.dataSdk.update({...existingEmployee, ...employeeData});
+            } else {
+                result = await window.dataSdk.create(employeeData);
+            }
+
+            btnText.style.display = 'inline';
+            loading.style.display = 'none';
+            saveBtn.disabled = false;
+
+            if (result.isOk) {
+                closeModal('employeeModal');
+                showMessage(currentEditingId ? 'Employee updated successfully!' : 'Employee added successfully!', 'success');
+            } else {
+                showMessage('Error saving employee. Please try again.', 'error');
+            }
+        }
+
+        function displayEmployees() {
+            const employees = currentData.filter(item => item.type === 'employee_management');
+            const tbody = document.getElementById('employeesTable');
+            
+            if (employees.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No employees found. Click "Add Employee" to get started.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = employees.map(employee => `
+                <tr>
+                    <td>${employee.employee_id || 'N/A'}</td>
+                    <td>${employee.last_name || ''}, ${employee.first_name || ''}</td>
+                    <td>${employee.position || 'N/A'}</td>
+                    <td><span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; background: ${getEmployeeStatusColor(employee.status)}; color: white;">${employee.status || 'N/A'}</span></td>
+                    <td>${employee.contact_number || 'N/A'}</td>
+                    <td>
+                        <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="viewEmployeeDetails(${JSON.stringify(employee).replace(/"/g, '&quot;')})">👁️ View</button>
+                        <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openEmployeeModal(${JSON.stringify(employee).replace(/"/g, '&quot;')})">Edit</button>
+                        <button class="btn btn-secondary" style="padding: 6px 12px; margin-right: 5px;" onclick="printEmployeeProfile(${JSON.stringify(employee).replace(/"/g, '&quot;')})">🖨️ Print</button>
+                        <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${employee.__backendId}', 'employee')">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function searchEmployees() {
+            const searchTerm = document.getElementById('employeeSearch').value.toLowerCase();
+            const employees = currentData.filter(item => 
+                item.type === 'employee_management' && (
+                    (item.first_name || '').toLowerCase().includes(searchTerm) ||
+                    (item.last_name || '').toLowerCase().includes(searchTerm) ||
+                    (item.employee_id || '').toLowerCase().includes(searchTerm) ||
+                    (item.position || '').toLowerCase().includes(searchTerm)
+                )
+            );
+            
+            const tbody = document.getElementById('employeesTable');
+            if (employees.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No employees found matching your search.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = employees.map(employee => `
+                <tr>
+                    <td>${employee.employee_id || 'N/A'}</td>
+                    <td>${employee.last_name || ''}, ${employee.first_name || ''}</td>
+                    <td>${employee.position || 'N/A'}</td>
+                    <td><span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; background: ${getEmployeeStatusColor(employee.status)}; color: white;">${employee.status || 'N/A'}</span></td>
+                    <td>${employee.contact_number || 'N/A'}</td>
+                    <td>
+                        <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="viewEmployeeDetails(${JSON.stringify(employee).replace(/"/g, '&quot;')})">👁️ View</button>
+                        <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openEmployeeModal(${JSON.stringify(employee).replace(/"/g, '&quot;')})">Edit</button>
+                        <button class="btn btn-secondary" style="padding: 6px 12px; margin-right: 5px;" onclick="printEmployeeProfile(${JSON.stringify(employee).replace(/"/g, '&quot;')})">🖨️ Print</button>
+                        <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${employee.__backendId}', 'employee')">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function searchEmployeeForPayroll() {
+            const employeeId = document.getElementById('payrollEmployeeId').value;
+            if (!employeeId) return;
+
+            const employee = currentData.find(item => 
+                item.type === 'employee_management' && 
+                item.employee_id === employeeId
+            );
+
+            if (employee) {
+                document.getElementById('payrollEmployeeName').value = `${employee.last_name}, ${employee.first_name}`;
+                document.getElementById('payrollPosition').value = employee.position || '';
+                document.getElementById('payrollEmailAddress').value = employee.email_address || '';
+                showMessage('Employee found and details loaded!', 'success');
+            } else {
+                document.getElementById('payrollEmployeeName').value = '';
+                document.getElementById('payrollPosition').value = '';
+                document.getElementById('payrollEmailAddress').value = '';
+                showMessage('Employee not found. Please check the Employee ID.', 'error');
+            }
+        }
+
+        function viewEmployeeDetails(employee) {
+            currentViewingEmployee = employee;
+            
+            const content = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div>
+                        <h4 style="color: #2d5016; margin-bottom: 15px; border-bottom: 2px solid #2d5016; padding-bottom: 5px;">Personal Information</h4>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd; width: 40%;">Employee ID:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${employee.employee_id || 'N/A'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">Full Name:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${employee.last_name || ''}, ${employee.first_name || ''} ${employee.middle_name || ''}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">Gender:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${employee.gender || 'N/A'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">Civil Status:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${employee.civil_status || 'N/A'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">Date of Birth:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${formatDate(employee.date_of_birth) || 'N/A'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">Address:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${employee.address || 'N/A'}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #2d5016; margin-bottom: 15px; border-bottom: 2px solid #2d5016; padding-bottom: 5px;">Employment Details</h4>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd; width: 40%;">Position:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${employee.position || 'N/A'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">Date Hired:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${formatDate(employee.date_hired) || 'N/A'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">Status:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; background: ${getEmployeeStatusColor(employee.status)}; color: white;">
+                                        ${employee.status || 'N/A'}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">Contact Number:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${employee.contact_number || 'N/A'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">Email Address:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${employee.email_address || 'N/A'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">Emergency Contact:</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${employee.emergency_contact || 'N/A'}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="color: #2d5016; margin-bottom: 15px; border-bottom: 2px solid #2d5016; padding-bottom: 5px;">Government IDs & Benefits</h4>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd; width: 25%;">TIN:</td>
+                            <td style="padding: 8px; border: 1px solid #ddd; width: 25%;">${employee.tin || 'N/A'}</td>
+                            <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd; width: 25%;">SSS:</td>
+                            <td style="padding: 8px; border: 1px solid #ddd; width: 25%;">${employee.sss || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">Pag-IBIG:</td>
+                            <td style="padding: 8px; border: 1px solid #ddd;">${employee.pagibig || 'N/A'}</td>
+                            <td style="padding: 8px; font-weight: bold; background: #f8f9fa; border: 1px solid #ddd;">PhilHealth:</td>
+                            <td style="padding: 8px; border: 1px solid #ddd;">${employee.philhealth || 'N/A'}</td>
+                        </tr>
+                    </table>
+                </div>
+            `;
+            
+            document.getElementById('employeeViewContent').innerHTML = content;
+            document.getElementById('employeeViewModal').style.display = 'block';
+        }
+
+        function printEmployeeFromView() {
+            if (currentViewingEmployee) {
+                printEmployeeProfile(currentViewingEmployee);
+            }
+        }
+
+        function getEmployeeStatusColor(status) {
+            switch(status) {
+                case 'Regular': return '#28a745';
+                case 'Contractual': return '#ffc107';
+                case 'Provisionary': return '#17a2b8';
+                default: return '#6c757d';
+            }
+        }
+
+        // Student Management Functions
+        function openStudentModal(student = null) {
+            currentEditingId = student ? student.__backendId : null;
+            document.getElementById('studentModalTitle').textContent = student ? 'Edit Student' : 'Add New Student';
+            
+            if (student) {
+                document.getElementById('studentId').value = student.student_id || '';
+                document.getElementById('lastName').value = student.last_name || '';
+                document.getElementById('firstName').value = student.first_name || '';
+                document.getElementById('middleName').value = student.middle_name || '';
+                document.getElementById('lrn').value = student.lrn || '';
+                document.getElementById('firstYearAttended').value = student.first_year_attended || '';
+                document.getElementById('gradeLevel').value = student.grade_level || '';
+                document.getElementById('status').value = student.status || '';
+                document.getElementById('gender').value = student.gender || '';
+                document.getElementById('age').value = student.age || '';
+                document.getElementById('birthdate').value = student.birthdate || '';
+                document.getElementById('contactInfo').value = student.contact_info || '';
+                document.getElementById('address').value = student.address || '';
+                document.getElementById('parentGuardian').value = student.parent_guardian || '';
+                document.getElementById('emergencyContact').value = student.emergency_contact || '';
+                document.getElementById('memo').value = student.memo || '';
+            } else {
+                document.getElementById('studentForm').reset();
+            }
+            
+            document.getElementById('studentModal').style.display = 'block';
+        }
+
+        async function saveStudent(event) {
+            event.preventDefault();
+            
+            if (currentData.length >= 999 && !currentEditingId) {
+                showMessage('Maximum limit of 999 records reached. Please delete some records first.', 'error');
+                return;
+            }
+
+            const saveBtn = document.getElementById('saveStudentBtn');
+            const btnText = saveBtn.querySelector('.btn-text');
+            const loading = saveBtn.querySelector('.loading');
+            
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            saveBtn.disabled = true;
+
+            const studentData = {
+                type: 'student',
+                student_id: document.getElementById('studentId').value,
+                last_name: document.getElementById('lastName').value,
+                first_name: document.getElementById('firstName').value,
+                middle_name: document.getElementById('middleName').value,
+                lrn: document.getElementById('lrn').value,
+                first_year_attended: document.getElementById('firstYearAttended').value,
+                grade_level: document.getElementById('gradeLevel').value,
+                status: document.getElementById('status').value,
+                gender: document.getElementById('gender').value,
+                age: parseInt(document.getElementById('age').value) || 0,
+                birthdate: document.getElementById('birthdate').value,
+                contact_info: document.getElementById('contactInfo').value,
+                address: document.getElementById('address').value,
+                parent_guardian: document.getElementById('parentGuardian').value,
+                emergency_contact: document.getElementById('emergencyContact').value,
+                memo: document.getElementById('memo').value,
+                created_at: new Date().toISOString()
+            };
+
+            let result;
+            if (currentEditingId) {
+                const existingStudent = currentData.find(item => item.__backendId === currentEditingId);
+                result = await window.dataSdk.update({...existingStudent, ...studentData});
+            } else {
+                result = await window.dataSdk.create(studentData);
+            }
+
+            btnText.style.display = 'inline';
+            loading.style.display = 'none';
+            saveBtn.disabled = false;
+
+            if (result.isOk) {
+                closeModal('studentModal');
+                showMessage(currentEditingId ? 'Student updated successfully!' : 'Student added successfully!', 'success');
+            } else {
+                showMessage('Error saving student. Please try again.', 'error');
+            }
+        }
+
+        function displayStudents() {
+            const students = currentData.filter(item => item.type === 'student');
+            const tbody = document.getElementById('studentsTable');
+            
+            if (students.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No students found. Click "Add Student" to get started.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = students.map(student => `
+                <tr>
+                    <td>${student.student_id || 'N/A'}</td>
+                    <td>${student.last_name || ''}, ${student.first_name || ''}</td>
+                    <td>${student.grade_level || 'N/A'}</td>
+                    <td><span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; background: ${getStatusColor(student.status)}; color: white;">${student.status || 'N/A'}</span></td>
+                    <td>${student.contact_info || 'N/A'}</td>
+                    <td>
+                        <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openStudentModal(${JSON.stringify(student).replace(/"/g, '&quot;')})">Edit</button>
+                        <button class="btn btn-secondary" style="padding: 6px 12px; margin-right: 5px;" onclick="printStudentDetails(${JSON.stringify(student).replace(/"/g, '&quot;')})">🖨️ Print</button>
+                        <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${student.__backendId}', 'student')">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function searchStudents() {
+            const searchTerm = document.getElementById('studentSearch').value.toLowerCase();
+            const students = currentData.filter(item => 
+                item.type === 'student' && (
+                    (item.first_name || '').toLowerCase().includes(searchTerm) ||
+                    (item.last_name || '').toLowerCase().includes(searchTerm) ||
+                    (item.student_id || '').toLowerCase().includes(searchTerm) ||
+                    (item.grade_level || '').toLowerCase().includes(searchTerm)
+                )
+            );
+            
+            const tbody = document.getElementById('studentsTable');
+            if (students.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No students found matching your search.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = students.map(student => `
+                <tr>
+                    <td>${student.student_id || 'N/A'}</td>
+                    <td>${student.last_name || ''}, ${student.first_name || ''}</td>
+                    <td>${student.grade_level || 'N/A'}</td>
+                    <td><span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; background: ${getStatusColor(student.status)}; color: white;">${student.status || 'N/A'}</span></td>
+                    <td>${student.contact_info || 'N/A'}</td>
+                    <td>
+                        <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openStudentModal(${JSON.stringify(student).replace(/"/g, '&quot;')})">Edit</button>
+                        <button class="btn btn-secondary" style="padding: 6px 12px; margin-right: 5px;" onclick="printStudentDetails(${JSON.stringify(student).replace(/"/g, '&quot;')})">🖨️ Print</button>
+                        <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${student.__backendId}', 'student')">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Invoice Management Functions
+        function openInvoiceModal(invoice = null) {
+            currentEditingId = invoice ? invoice.__backendId : null;
+            
+            if (invoice) {
+                document.getElementById('invoiceNumber').value = invoice.invoice_number || '';
+                document.getElementById('invoiceDate').value = invoice.invoice_date || '';
+                document.getElementById('invoiceStudent').value = invoice.student_id || '';
+                // Load invoice items if editing
+            } else {
+                document.getElementById('invoiceForm').reset();
+                generateInvoiceNumber();
+                document.getElementById('invoiceDate').value = new Date().toISOString().split('T')[0];
+                // Reset invoice items
+                document.getElementById('invoiceItems').innerHTML = `
+                    <div class="invoice-item">
+                        <select class="item-description" required>
+                            <option value="">Select Fee Type</option>
+                            <option value="Tuition Fee">Tuition Fee</option>
+                            <option value="Books">Books</option>
+                            <option value="Uniform">Uniform</option>
+                            <option value="Miscellaneous">Miscellaneous</option>
+                            <option value="Registration Fee">Registration Fee</option>
+                            <option value="Laboratory Fee">Laboratory Fee</option>
+                            <option value="Library Fee">Library Fee</option>
+                            <option value="ID Fee">ID Fee</option>
+                            <option value="Transportation">Transportation</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <input type="number" placeholder="Amount" class="item-amount" step="0.01" min="0" required>
+                        <button type="button" class="btn btn-danger" onclick="removeInvoiceItem(this)">Remove</button>
+                    </div>
+                `;
+            }
+            
+            populateStudentDropdown();
+            calculateInvoiceTotal();
+            document.getElementById('invoiceModal').style.display = 'block';
+        }
+
+        function generateInvoiceNumber() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const invoiceNum = `INV-${year}${month}-${String(invoiceCounter).padStart(4, '0')}`;
+            document.getElementById('invoiceNumber').value = invoiceNum;
+            invoiceCounter++;
+        }
+
+        function populateStudentDropdown() {
+            const students = currentData.filter(item => item.type === 'student');
+            const select = document.getElementById('invoiceStudent');
+            
+            select.innerHTML = '<option value="">Select Student</option>';
+            students.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.student_id;
+                option.textContent = `${student.last_name}, ${student.first_name} (${student.student_id})`;
+                select.appendChild(option);
+            });
+        }
+
+        function addInvoiceItem() {
+            const container = document.getElementById('invoiceItems');
+            const newItem = document.createElement('div');
+            newItem.className = 'invoice-item';
+            newItem.innerHTML = `
+                <select class="item-description" required>
+                    <option value="">Select Fee Type</option>
+                    <option value="Tuition Fee">Tuition Fee</option>
+                    <option value="Books">Books</option>
+                    <option value="Uniform">Uniform</option>
+                    <option value="Miscellaneous">Miscellaneous</option>
+                    <option value="Registration Fee">Registration Fee</option>
+                    <option value="Laboratory Fee">Laboratory Fee</option>
+                    <option value="Library Fee">Library Fee</option>
+                    <option value="ID Fee">ID Fee</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Other">Other</option>
+                </select>
+                <input type="number" placeholder="Amount" class="item-amount" step="0.01" min="0" required>
+                <button type="button" class="btn btn-danger" onclick="removeInvoiceItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            
+            // Add event listeners for calculation
+            const amountInput = newItem.querySelector('.item-amount');
+            amountInput.addEventListener('input', calculateInvoiceTotal);
+        }
+
+        function removeInvoiceItem(button) {
+            const items = document.querySelectorAll('.invoice-item');
+            if (items.length > 1) {
+                button.parentElement.remove();
+                calculateInvoiceTotal();
+            }
+        }
+
+        function calculateInvoiceTotal() {
+            const items = document.querySelectorAll('.invoice-item');
+            let total = 0;
+            
+            items.forEach(item => {
+                const amount = parseFloat(item.querySelector('.item-amount').value) || 0;
+                total += amount;
+            });
+            
+            document.getElementById('invoiceTotal').textContent = total.toFixed(2);
+        }
+
+        async function saveInvoice(event) {
+            event.preventDefault();
+            
+            if (currentData.length >= 999 && !currentEditingId) {
+                showMessage('Maximum limit of 999 records reached. Please delete some records first.', 'error');
+                return;
+            }
+
+            const saveBtn = document.getElementById('saveInvoiceBtn');
+            const btnText = saveBtn.querySelector('.btn-text');
+            const loading = saveBtn.querySelector('.loading');
+            
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            saveBtn.disabled = true;
+
+            const items = Array.from(document.querySelectorAll('.invoice-item')).map(item => ({
+                description: item.querySelector('.item-description').value,
+                amount: parseFloat(item.querySelector('.item-amount').value) || 0
+            }));
+
+            const invoiceData = {
+                type: 'invoice',
+                invoice_number: document.getElementById('invoiceNumber').value,
+                invoice_date: document.getElementById('invoiceDate').value,
+                student_id: document.getElementById('invoiceStudent').value,
+                items: JSON.stringify(items),
+                total_amount: parseFloat(document.getElementById('invoiceTotal').textContent),
+                created_at: new Date().toISOString()
+            };
+
+            let result;
+            if (currentEditingId) {
+                const existingInvoice = currentData.find(item => item.__backendId === currentEditingId);
+                result = await window.dataSdk.update({...existingInvoice, ...invoiceData});
+            } else {
+                result = await window.dataSdk.create(invoiceData);
+            }
+
+            btnText.style.display = 'inline';
+            loading.style.display = 'none';
+            saveBtn.disabled = false;
+
+            if (result.isOk) {
+                closeModal('invoiceModal');
+                showMessage(currentEditingId ? 'Invoice updated successfully!' : 'Invoice created successfully!', 'success');
+            } else {
+                showMessage('Error saving invoice. Please try again.', 'error');
+            }
+        }
+
+        function displayInvoices() {
+            const invoices = currentData.filter(item => item.type === 'invoice');
+            const tbody = document.getElementById('invoicesTable');
+            
+            if (invoices.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px; color: #666;">No invoices found. Click "Create Invoice" to get started.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = invoices.map(invoice => {
+                const student = currentData.find(s => s.type === 'student' && s.student_id === invoice.student_id);
+                const studentName = student ? `${student.last_name}, ${student.first_name}` : 'Unknown Student';
+                
+                return `
+                    <tr>
+                        <td>${invoice.invoice_number || 'N/A'}</td>
+                        <td>${formatDate(invoice.invoice_date)}</td>
+                        <td>${studentName}</td>
+                        <td>₱${(invoice.total_amount || 0).toFixed(2)}</td>
+                        <td>
+                            <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openInvoiceModal(${JSON.stringify(invoice).replace(/"/g, '&quot;')})">Edit</button>
+                            <button class="btn btn-secondary" style="padding: 6px 12px; margin-right: 5px;" onclick="printInvoiceDetails(${JSON.stringify(invoice).replace(/"/g, '&quot;')})">🖨️ Print</button>
+                            <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${invoice.__backendId}', 'invoice')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function searchInvoices() {
+            const searchTerm = document.getElementById('invoiceSearch').value.toLowerCase();
+            const invoices = currentData.filter(item => 
+                item.type === 'invoice' && (
+                    (item.invoice_number || '').toLowerCase().includes(searchTerm) ||
+                    (item.student_id || '').toLowerCase().includes(searchTerm)
+                )
+            );
+            
+            const tbody = document.getElementById('invoicesTable');
+            if (invoices.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px; color: #666;">No invoices found matching your search.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = invoices.map(invoice => {
+                const student = currentData.find(s => s.type === 'student' && s.student_id === invoice.student_id);
+                const studentName = student ? `${student.last_name}, ${student.first_name}` : 'Unknown Student';
+                
+                return `
+                    <tr>
+                        <td>${invoice.invoice_number || 'N/A'}</td>
+                        <td>${formatDate(invoice.invoice_date)}</td>
+                        <td>${studentName}</td>
+                        <td>₱${(invoice.total_amount || 0).toFixed(2)}</td>
+                        <td>
+                            <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openInvoiceModal(${JSON.stringify(invoice).replace(/"/g, '&quot;')})">Edit</button>
+                            <button class="btn btn-secondary" style="padding: 6px 12px; margin-right: 5px;" onclick="printInvoiceDetails(${JSON.stringify(invoice).replace(/"/g, '&quot;')})">🖨️ Print</button>
+                            <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${invoice.__backendId}', 'invoice')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Payroll Management Functions
+        function openPayrollModal(payroll = null) {
+            currentEditingId = payroll ? payroll.__backendId : null;
+            document.getElementById('payrollModalTitle').textContent = payroll ? 'Edit Payroll' : 'Create Payroll';
+            
+            if (payroll) {
+                document.getElementById('payrollEmployeeId').value = payroll.employee_id || '';
+                document.getElementById('payrollEmployeeName').value = payroll.employee_name || '';
+                document.getElementById('payrollPosition').value = payroll.position || '';
+                document.getElementById('payrollEmailAddress').value = payroll.email_address || '';
+                document.getElementById('monthlySalary').value = payroll.monthly_salary || '';
+                document.getElementById('rate').value = payroll.rate || '';
+                document.getElementById('sssDeduction').value = payroll.sss_deduction || '';
+                document.getElementById('pagibigDeduction').value = payroll.pagibig_deduction || '';
+                document.getElementById('philhealthDeduction').value = payroll.philhealth_deduction || '';
+                document.getElementById('otherDeductions').value = payroll.other_deductions || '';
+                document.getElementById('allowances').value = payroll.allowances || '';
+                document.getElementById('payPeriod').value = payroll.pay_period || '';
+                calculateBiWeeklyRate();
+                calculateNetPay();
+            } else {
+                document.getElementById('payrollForm').reset();
+                document.getElementById('netPayDisplay').textContent = '0.00';
+                // Set current date as default
+                const currentDate = new Date().toISOString().split('T')[0];
+                document.getElementById('payPeriod').value = currentDate;
+            }
+            
+            document.getElementById('payrollModal').style.display = 'block';
+        }
+
+        function calculateBiWeeklyRate() {
+            const monthlySalary = parseFloat(document.getElementById('monthlySalary').value) || 0;
+            const biWeeklyRate = monthlySalary / 2; // Half of monthly salary
+            document.getElementById('rate').value = biWeeklyRate.toFixed(2);
+            calculateNetPay();
+        }
+
+        function calculateNetPay() {
+            const rate = parseFloat(document.getElementById('rate').value) || 0;
+            const sssDeduction = parseFloat(document.getElementById('sssDeduction').value) || 0;
+            const pagibigDeduction = parseFloat(document.getElementById('pagibigDeduction').value) || 0;
+            const philhealthDeduction = parseFloat(document.getElementById('philhealthDeduction').value) || 0;
+            const otherDeductions = parseFloat(document.getElementById('otherDeductions').value) || 0;
+            const allowances = parseFloat(document.getElementById('allowances').value) || 0;
+            
+            const totalDeductions = sssDeduction + pagibigDeduction + philhealthDeduction + otherDeductions;
+            const netPay = rate - totalDeductions + allowances;
+            document.getElementById('netPayDisplay').textContent = netPay.toFixed(2);
+        }
+
+        async function savePayroll(event) {
+            event.preventDefault();
+            
+            if (currentData.length >= 999 && !currentEditingId) {
+                showMessage('Maximum limit of 999 records reached. Please delete some records first.', 'error');
+                return;
+            }
+
+            const saveBtn = document.getElementById('savePayrollBtn');
+            const btnText = saveBtn.querySelector('.btn-text');
+            const loading = saveBtn.querySelector('.loading');
+            
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            saveBtn.disabled = true;
+
+            const monthlySalary = parseFloat(document.getElementById('monthlySalary').value) || 0;
+            const rate = parseFloat(document.getElementById('rate').value) || 0;
+            const sssDeduction = parseFloat(document.getElementById('sssDeduction').value) || 0;
+            const pagibigDeduction = parseFloat(document.getElementById('pagibigDeduction').value) || 0;
+            const philhealthDeduction = parseFloat(document.getElementById('philhealthDeduction').value) || 0;
+            const otherDeductions = parseFloat(document.getElementById('otherDeductions').value) || 0;
+            const allowances = parseFloat(document.getElementById('allowances').value) || 0;
+            
+            const totalDeductions = sssDeduction + pagibigDeduction + philhealthDeduction + otherDeductions;
+
+            const payrollData = {
+                type: 'payroll',
+                employee_id: document.getElementById('payrollEmployeeId').value,
+                employee_name: document.getElementById('payrollEmployeeName').value,
+                position: document.getElementById('payrollPosition').value,
+                email_address: document.getElementById('payrollEmailAddress').value,
+                monthly_salary: monthlySalary,
+                rate: rate,
+                sss_deduction: sssDeduction,
+                pagibig_deduction: pagibigDeduction,
+                philhealth_deduction: philhealthDeduction,
+                other_deductions: otherDeductions,
+                total_deductions: totalDeductions,
+                allowances: allowances,
+                net_pay: rate - totalDeductions + allowances,
+                pay_period: document.getElementById('payPeriod').value,
+                created_at: new Date().toISOString()
+            };
+
+            let result;
+            if (currentEditingId) {
+                const existingPayroll = currentData.find(item => item.__backendId === currentEditingId);
+                result = await window.dataSdk.update({...existingPayroll, ...payrollData});
+            } else {
+                result = await window.dataSdk.create(payrollData);
+            }
+
+            btnText.style.display = 'inline';
+            loading.style.display = 'none';
+            saveBtn.disabled = false;
+
+            if (result.isOk) {
+                closeModal('payrollModal');
+                showMessage(currentEditingId ? 'Payroll updated successfully!' : 'Payroll created successfully!', 'success');
+            } else {
+                showMessage('Error saving payroll. Please try again.', 'error');
+            }
+        }
+
+        function displayPayroll() {
+            const payrollRecords = currentData.filter(item => item.type === 'payroll');
+            const tbody = document.getElementById('payrollTable');
+            
+            if (payrollRecords.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No payroll records found. Click "Create Payroll" to get started.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = payrollRecords.map(payroll => `
+                <tr>
+                    <td>${payroll.employee_id || 'N/A'}</td>
+                    <td>${payroll.employee_name || 'N/A'}</td>
+                    <td>${payroll.position || 'N/A'}</td>
+                    <td>₱${(payroll.rate || 0).toFixed(2)}</td>
+                    <td>₱${(payroll.net_pay || 0).toFixed(2)}</td>
+                    <td>
+                        <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openPayrollModal(${JSON.stringify(payroll).replace(/"/g, '&quot;')})">Edit</button>
+                        <button class="btn btn-secondary" style="padding: 6px 12px; margin-right: 5px;" onclick="printPayrollDetails(${JSON.stringify(payroll).replace(/"/g, '&quot;')})">🖨️ Payslip</button>
+                        <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${payroll.__backendId}', 'payroll')">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function searchPayroll() {
+            const searchTerm = document.getElementById('payrollSearch').value.toLowerCase();
+            const payrollRecords = currentData.filter(item => 
+                item.type === 'payroll' && (
+                    (item.employee_name || '').toLowerCase().includes(searchTerm) ||
+                    (item.employee_id || '').toLowerCase().includes(searchTerm) ||
+                    (item.position || '').toLowerCase().includes(searchTerm)
+                )
+            );
+            
+            const tbody = document.getElementById('payrollTable');
+            if (payrollRecords.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No payroll records found matching your search.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = payrollRecords.map(payroll => `
+                <tr>
+                    <td>${payroll.employee_id || 'N/A'}</td>
+                    <td>${payroll.employee_name || 'N/A'}</td>
+                    <td>${payroll.position || 'N/A'}</td>
+                    <td>₱${(payroll.rate || 0).toFixed(2)}</td>
+                    <td>₱${(payroll.net_pay || 0).toFixed(2)}</td>
+                    <td>
+                        <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openPayrollModal(${JSON.stringify(payroll).replace(/"/g, '&quot;')})">Edit</button>
+                        <button class="btn btn-secondary" style="padding: 6px 12px; margin-right: 5px;" onclick="printPayrollDetails(${JSON.stringify(payroll).replace(/"/g, '&quot;')})">🖨️ Payslip</button>
+                        <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${payroll.__backendId}', 'payroll')">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function printCurrentPayslip() {
+            const payrollData = {
+                employee_id: document.getElementById('payrollEmployeeId').value,
+                employee_name: document.getElementById('payrollEmployeeName').value,
+                position: document.getElementById('payrollPosition').value,
+                monthly_salary: parseFloat(document.getElementById('monthlySalary').value) || 0,
+                rate: parseFloat(document.getElementById('rate').value) || 0,
+                sss_deduction: parseFloat(document.getElementById('sssDeduction').value) || 0,
+                pagibig_deduction: parseFloat(document.getElementById('pagibigDeduction').value) || 0,
+                philhealth_deduction: parseFloat(document.getElementById('philhealthDeduction').value) || 0,
+                other_deductions: parseFloat(document.getElementById('otherDeductions').value) || 0,
+                allowances: parseFloat(document.getElementById('allowances').value) || 0,
+                net_pay: parseFloat(document.getElementById('netPayDisplay').textContent) || 0,
+                pay_period: document.getElementById('payPeriod').value
+            };
+            
+            printPayrollDetails(payrollData);
+        }
+
+
+
+        // Inventory Management Functions
+        function openInventoryModal(item = null) {
+            currentEditingId = item ? item.__backendId : null;
+            document.getElementById('inventoryModalTitle').textContent = item ? 'Edit Inventory Item' : 'Add Inventory Item';
+            
+            if (item) {
+                document.getElementById('itemName').value = item.item_name || '';
+                document.getElementById('quantity').value = item.quantity || '';
+                document.getElementById('purchaseDate').value = item.purchase_date || '';
+                document.getElementById('supplier').value = item.supplier || '';
+                document.getElementById('cost').value = item.cost || '';
+                document.getElementById('itemCategory').value = item.category || '';
+            } else {
+                document.getElementById('inventoryForm').reset();
+                document.getElementById('purchaseDate').value = new Date().toISOString().split('T')[0];
+            }
+            
+            document.getElementById('inventoryModal').style.display = 'block';
+        }
+
+        async function saveInventory(event) {
+            event.preventDefault();
+            
+            if (currentData.length >= 999 && !currentEditingId) {
+                showMessage('Maximum limit of 999 records reached. Please delete some records first.', 'error');
+                return;
+            }
+
+            const saveBtn = document.getElementById('saveInventoryBtn');
+            const btnText = saveBtn.querySelector('.btn-text');
+            const loading = saveBtn.querySelector('.loading');
+            
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            saveBtn.disabled = true;
+
+            const inventoryData = {
+                type: 'inventory',
+                item_name: document.getElementById('itemName').value,
+                quantity: parseInt(document.getElementById('quantity').value) || 0,
+                purchase_date: document.getElementById('purchaseDate').value,
+                supplier: document.getElementById('supplier').value,
+                cost: parseFloat(document.getElementById('cost').value) || 0,
+                category: document.getElementById('itemCategory').value,
+                created_at: new Date().toISOString()
+            };
+
+            let result;
+            if (currentEditingId) {
+                const existingItem = currentData.find(item => item.__backendId === currentEditingId);
+                result = await window.dataSdk.update({...existingItem, ...inventoryData});
+            } else {
+                result = await window.dataSdk.create(inventoryData);
+            }
+
+            btnText.style.display = 'inline';
+            loading.style.display = 'none';
+            saveBtn.disabled = false;
+
+            if (result.isOk) {
+                closeModal('inventoryModal');
+                showMessage(currentEditingId ? 'Inventory item updated successfully!' : 'Inventory item added successfully!', 'success');
+            } else {
+                showMessage('Error saving inventory item. Please try again.', 'error');
+            }
+        }
+
+        function displayInventory() {
+            const inventory = currentData.filter(item => item.type === 'inventory');
+            const tbody = document.getElementById('inventoryTable');
+            
+            if (inventory.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No inventory items found. Click "Add Item" to get started.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = inventory.map(item => {
+                const status = item.quantity <= 10 ? 'Low Stock' : 'In Stock';
+                const statusColor = item.quantity <= 10 ? '#dc3545' : '#28a745';
+                
+                return `
+                    <tr>
+                        <td>${item.item_name || 'N/A'}</td>
+                        <td>${item.quantity || 0}</td>
+                        <td>${item.supplier || 'N/A'}</td>
+                        <td>₱${(item.cost || 0).toFixed(2)}</td>
+                        <td><span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; background: ${statusColor}; color: white;">${status}</span></td>
+                        <td>
+                            <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openInventoryModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">Edit</button>
+                            <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${item.__backendId}', 'inventory')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function searchInventory() {
+            const searchTerm = document.getElementById('inventorySearch').value.toLowerCase();
+            const inventory = currentData.filter(item => 
+                item.type === 'inventory' && (
+                    (item.item_name || '').toLowerCase().includes(searchTerm) ||
+                    (item.supplier || '').toLowerCase().includes(searchTerm) ||
+                    (item.category || '').toLowerCase().includes(searchTerm)
+                )
+            );
+            
+            const tbody = document.getElementById('inventoryTable');
+            if (inventory.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No inventory items found matching your search.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = inventory.map(item => {
+                const status = item.quantity <= 10 ? 'Low Stock' : 'In Stock';
+                const statusColor = item.quantity <= 10 ? '#dc3545' : '#28a745';
+                
+                return `
+                    <tr>
+                        <td>${item.item_name || 'N/A'}</td>
+                        <td>${item.quantity || 0}</td>
+                        <td>${item.supplier || 'N/A'}</td>
+                        <td>₱${(item.cost || 0).toFixed(2)}</td>
+                        <td><span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; background: ${statusColor}; color: white;">${status}</span></td>
+                        <td>
+                            <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openInventoryModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">Edit</button>
+                            <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${item.__backendId}', 'inventory')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Bookkeeping Management Functions
+        function openBookkeepingModal(entry = null) {
+            currentEditingId = entry ? entry.__backendId : null;
+            document.getElementById('bookkeepingModalTitle').textContent = entry ? 'Edit Bookkeeping Entry' : 'Add Bookkeeping Entry';
+            
+            if (entry) {
+                document.getElementById('entryDate').value = entry.date || '';
+                document.getElementById('entryCategory').value = entry.category || '';
+                document.getElementById('entryType').value = entry.type || '';
+                document.getElementById('entryAmount').value = entry.amount || '';
+                document.getElementById('entryDescription').value = entry.description || '';
+            } else {
+                document.getElementById('bookkeepingForm').reset();
+                document.getElementById('entryDate').value = new Date().toISOString().split('T')[0];
+            }
+            
+            document.getElementById('bookkeepingModal').style.display = 'block';
+        }
+
+        async function saveBookkeeping(event) {
+            event.preventDefault();
+            
+            if (currentData.length >= 999 && !currentEditingId) {
+                showMessage('Maximum limit of 999 records reached. Please delete some records first.', 'error');
+                return;
+            }
+
+            const saveBtn = document.getElementById('saveBookkeepingBtn');
+            const btnText = saveBtn.querySelector('.btn-text');
+            const loading = saveBtn.querySelector('.loading');
+            
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            saveBtn.disabled = true;
+
+            const bookkeepingData = {
+                type: 'bookkeeping',
+                date: document.getElementById('entryDate').value,
+                category: document.getElementById('entryCategory').value,
+                entry_type: document.getElementById('entryType').value,
+                amount: parseFloat(document.getElementById('entryAmount').value) || 0,
+                description: document.getElementById('entryDescription').value,
+                created_at: new Date().toISOString()
+            };
+
+            let result;
+            if (currentEditingId) {
+                const existingEntry = currentData.find(item => item.__backendId === currentEditingId);
+                result = await window.dataSdk.update({...existingEntry, ...bookkeepingData});
+            } else {
+                result = await window.dataSdk.create(bookkeepingData);
+            }
+
+            btnText.style.display = 'inline';
+            loading.style.display = 'none';
+            saveBtn.disabled = false;
+
+            if (result.isOk) {
+                closeModal('bookkeepingModal');
+                showMessage(currentEditingId ? 'Bookkeeping entry updated successfully!' : 'Bookkeeping entry added successfully!', 'success');
+            } else {
+                showMessage('Error saving bookkeeping entry. Please try again.', 'error');
+            }
+        }
+
+        function displayBookkeeping() {
+            const bookkeeping = currentData.filter(item => item.type === 'bookkeeping');
+            const tbody = document.getElementById('bookkeepingTable');
+            
+            if (bookkeeping.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No bookkeeping entries found. Click "Add Entry" to get started.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = bookkeeping.map(entry => {
+                const typeColor = entry.entry_type === 'Income' ? '#28a745' : '#dc3545';
+                
+                return `
+                    <tr>
+                        <td>${formatDate(entry.date)}</td>
+                        <td>${entry.category || 'N/A'}</td>
+                        <td>${entry.description || 'N/A'}</td>
+                        <td>₱${(entry.amount || 0).toFixed(2)}</td>
+                        <td><span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; background: ${typeColor}; color: white;">${entry.entry_type || 'N/A'}</span></td>
+                        <td>
+                            <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openBookkeepingModal(${JSON.stringify(entry).replace(/"/g, '&quot;')})">Edit</button>
+                            <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${entry.__backendId}', 'bookkeeping')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterBookkeeping() {
+            const category = document.getElementById('categoryFilter').value;
+            const month = document.getElementById('monthFilter').value;
+            
+            let bookkeeping = currentData.filter(item => item.type === 'bookkeeping');
+            
+            if (category) {
+                bookkeeping = bookkeeping.filter(entry => entry.category === category);
+            }
+            
+            if (month) {
+                bookkeeping = bookkeeping.filter(entry => entry.date && entry.date.startsWith(month));
+            }
+            
+            const tbody = document.getElementById('bookkeepingTable');
+            if (bookkeeping.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No bookkeeping entries found matching your filters.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = bookkeeping.map(entry => {
+                const typeColor = entry.entry_type === 'Income' ? '#28a745' : '#dc3545';
+                
+                return `
+                    <tr>
+                        <td>${formatDate(entry.date)}</td>
+                        <td>${entry.category || 'N/A'}</td>
+                        <td>${entry.description || 'N/A'}</td>
+                        <td>₱${(entry.amount || 0).toFixed(2)}</td>
+                        <td><span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; background: ${typeColor}; color: white;">${entry.entry_type || 'N/A'}</span></td>
+                        <td>
+                            <button class="btn" style="padding: 6px 12px; margin-right: 5px;" onclick="openBookkeepingModal(${JSON.stringify(entry).replace(/"/g, '&quot;')})">Edit</button>
+                            <button class="btn btn-danger" style="padding: 6px 12px;" onclick="confirmDelete('${entry.__backendId}', 'bookkeeping')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Reports Functions
+        function displayReports() {
+            const students = currentData.filter(item => item.type === 'student' && item.status === 'Active');
+            const bookkeeping = currentData.filter(item => item.type === 'bookkeeping');
+            
+            const currentMonth = new Date().toISOString().slice(0, 7);
+            const currentMonthEntries = bookkeeping.filter(entry => entry.date && entry.date.startsWith(currentMonth));
+            
+            const revenue = currentMonthEntries
+                .filter(entry => entry.entry_type === 'Income')
+                .reduce((sum, entry) => sum + (entry.amount || 0), 0);
+                
+            const expenses = currentMonthEntries
+                .filter(entry => entry.entry_type === 'Expense')
+                .reduce((sum, entry) => sum + (entry.amount || 0), 0);
+            
+            document.getElementById('reportStudents').textContent = students.length;
+            document.getElementById('reportRevenue').textContent = `₱${revenue.toFixed(2)}`;
+            document.getElementById('reportExpenses').textContent = `₱${expenses.toFixed(2)}`;
+            document.getElementById('reportProfit').textContent = `₱${(revenue - expenses).toFixed(2)}`;
+            
+            // Update financial summary
+            document.getElementById('tuitionThisMonth').textContent = `₱${revenue.toFixed(2)}`;
+            document.getElementById('expensesThisMonth').textContent = `₱${expenses.toFixed(2)}`;
+        }
+
+        function displayRecentActivities() {
+            const tbody = document.getElementById('recentActivities');
+            const recentData = currentData
+                .filter(item => item.created_at)
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                .slice(0, 10);
+            
+            if (recentData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 40px; color: #666;">Welcome to the system! Activities will appear here as you use the modules.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = recentData.map(item => {
+                const date = new Date(item.created_at).toLocaleDateString();
+                let activity = '';
+                let module = '';
+                
+                switch(item.type) {
+                    case 'student':
+                        activity = `Added student: ${item.first_name} ${item.last_name}`;
+                        module = 'Students';
+                        break;
+                    case 'invoice':
+                        activity = `Created invoice: ${item.invoice_number}`;
+                        module = 'Invoice';
+                        break;
+                    case 'employee':
+                        activity = `Added employee: ${item.name}`;
+                        module = 'Payroll';
+                        break;
+                    case 'inventory':
+                        activity = `Added inventory: ${item.item_name}`;
+                        module = 'Inventory';
+                        break;
+                    case 'bookkeeping':
+                        activity = `Added ${item.entry_type}: ${item.description}`;
+                        module = 'Bookkeeping';
+                        break;
+                    default:
+                        activity = 'System activity';
+                        module = 'System';
+                }
+                
+                return `
+                    <tr>
+                        <td>${date}</td>
+                        <td>${activity}</td>
+                        <td>${module}</td>
+                        <td><span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; background: #28a745; color: white;">Completed</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Utility Functions
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            currentEditingId = null;
+        }
+
+        function confirmDelete(id, type) {
+            document.getElementById('confirmationMessage').textContent = `Are you sure you want to delete this ${type}? This action cannot be undone.`;
+            document.getElementById('confirmButton').onclick = () => deleteRecord(id);
+            document.getElementById('confirmationModal').style.display = 'block';
+        }
+
+        async function deleteRecord(id) {
+            const record = currentData.find(item => item.__backendId === id);
+            if (record) {
+                const result = await window.dataSdk.delete(record);
+                if (result.isOk) {
+                    showMessage('Record deleted successfully!', 'success');
+                } else {
+                    showMessage('Error deleting record. Please try again.', 'error');
+                }
+            }
+            closeModal('confirmationModal');
+        }
+
+        function showMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'error' ? 'error-message' : 'success-message';
+            messageDiv.textContent = message;
+            messageDiv.style.position = 'fixed';
+            messageDiv.style.top = '20px';
+            messageDiv.style.right = '20px';
+            messageDiv.style.zIndex = '9999';
+            messageDiv.style.maxWidth = '300px';
+            
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        function getStatusColor(status) {
+            switch(status) {
+                case 'Active': return '#28a745';
+                case 'Inactive': return '#6c757d';
+                case 'Transferee': return '#ffc107';
+                case 'Alumni': return '#17a2b8';
+                default: return '#6c757d';
+            }
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            return new Date(dateString).toLocaleDateString();
+        }
+
+        function updatePrintHeaders() {
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            const schoolName = config.school_name || defaultConfig.school_name;
+            
+            // Update any existing print headers
+            const printHeaders = document.querySelectorAll('.print-header h1');
+            printHeaders.forEach(header => {
+                header.textContent = schoolName;
+            });
+        }
+
+        // Individual Print Functions
+        function printEmployeeProfile(employee) {
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>Employee Profile</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    
+                    <table class="table" style="margin-bottom: 30px;">
+                        <tr>
+                            <td style="width: 30%; font-weight: bold; background: #f8f9fa;">Employee ID:</td>
+                            <td>${employee.employee_id || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Full Name:</td>
+                            <td>${employee.last_name || ''}, ${employee.first_name || ''} ${employee.middle_name || ''}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Position:</td>
+                            <td>${employee.position || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Date Hired:</td>
+                            <td>${formatDate(employee.date_hired) || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Status:</td>
+                            <td>${employee.status || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Gender:</td>
+                            <td>${employee.gender || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Civil Status:</td>
+                            <td>${employee.civil_status || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Date of Birth:</td>
+                            <td>${formatDate(employee.date_of_birth) || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Contact Number:</td>
+                            <td>${employee.contact_number || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Email Address:</td>
+                            <td>${employee.email_address || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Address:</td>
+                            <td>${employee.address || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Emergency Contact:</td>
+                            <td>${employee.emergency_contact || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">TIN:</td>
+                            <td>${employee.tin || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">SSS:</td>
+                            <td>${employee.sss || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Pag-IBIG:</td>
+                            <td>${employee.pagibig || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">PhilHealth:</td>
+                            <td>${employee.philhealth || 'N/A'}</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Employee Profile - ${employee.first_name} ${employee.last_name}</title>
+                        <style>
+                            @page { size: A4; margin: 0.5in; }
+                            body { font-family: Arial, sans-serif; margin: 0; font-size: 12px; line-height: 1.3; }
+                            .print-section { background: white; height: 100%; }
+                            .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2d5016; padding-bottom: 15px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 18px; }
+                            .print-header p { margin: 2px 0; font-size: 10px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 6px; text-align: left; font-size: 11px; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #666; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printEmployeeList() {
+            const employees = currentData.filter(item => item.type === 'employee_management');
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>Employee List</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Status</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${employees.map(employee => `
+                                <tr>
+                                    <td>${employee.employee_id || 'N/A'}</td>
+                                    <td>${employee.last_name || ''}, ${employee.first_name || ''}</td>
+                                    <td>${employee.position || 'N/A'}</td>
+                                    <td>${employee.status || 'N/A'}</td>
+                                    <td>${employee.contact_number || 'N/A'}</td>
+                                    <td>${employee.email_address || 'N/A'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Employee List</title>
+                        <style>
+                            @page { size: A4; margin: 0.5in; }
+                            body { font-family: Arial, sans-serif; margin: 0; font-size: 12px; line-height: 1.3; }
+                            .print-section { background: white; height: 100%; }
+                            .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2d5016; padding-bottom: 15px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 18px; }
+                            .print-header p { margin: 2px 0; font-size: 10px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 4px; text-align: left; font-size: 10px; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #666; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printPayrollDetails(payroll) {
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            const totalDeductions = (payroll.sss_deduction || 0) + (payroll.pagibig_deduction || 0) + 
+                                  (payroll.philhealth_deduction || 0) + (payroll.other_deductions || 0);
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>BI-WEEKLY PAYSLIP</h2>
+                        <p>Pay Date: ${formatDate(payroll.pay_period) || 'N/A'}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <table style="width: 100%; margin-bottom: 20px; font-size: 12px;">
+                            <tr>
+                                <td style="width: 50%;">
+                                    <strong>Employee ID:</strong> ${payroll.employee_id || 'N/A'}<br>
+                                    <strong>Name:</strong> ${payroll.employee_name || 'N/A'}<br>
+                                    <strong>Position:</strong> ${payroll.position || 'N/A'}
+                                </td>
+                                <td style="width: 50%; text-align: right;">
+                                    <strong>Generated:</strong> ${new Date().toLocaleDateString()}<br>
+                                    <strong>Pay Date:</strong> ${formatDate(payroll.pay_period) || 'N/A'}<br>
+                                    <strong>Pay Type:</strong> Bi-Weekly
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th style="text-align: right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>EARNINGS</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Monthly Salary</td>
+                                <td style="text-align: right;">₱${(payroll.monthly_salary || 0).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td>Bi-Weekly Rate (50% of Monthly)</td>
+                                <td style="text-align: right;">₱${(payroll.rate || 0).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td>Allowances</td>
+                                <td style="text-align: right;">₱${(payroll.allowances || 0).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DEDUCTIONS</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>SSS</td>
+                                <td style="text-align: right;">-₱${(payroll.sss_deduction || 0).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td>Pag-IBIG</td>
+                                <td style="text-align: right;">-₱${(payroll.pagibig_deduction || 0).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td>PhilHealth</td>
+                                <td style="text-align: right;">-₱${(payroll.philhealth_deduction || 0).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td>Other Deductions</td>
+                                <td style="text-align: right;">-₱${(payroll.other_deductions || 0).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Deductions</strong></td>
+                                <td style="text-align: right;"><strong>-₱${totalDeductions.toFixed(2)}</strong></td>
+                            </tr>
+                            <tr style="border-top: 2px solid #2d5016;">
+                                <td style="font-weight: bold; font-size: 16px;">NET PAY:</td>
+                                <td style="text-align: right; font-weight: bold; font-size: 16px;">₱${(payroll.net_pay || 0).toFixed(2)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div style="margin-top: 40px; text-align: center;">
+                        <p><strong>This is a computer-generated bi-weekly payslip.</strong></p>
+                        <p>Please keep this for your records.</p>
+                    </div>
+                    
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Payslip - ${payroll.employee_name} - ${payroll.pay_period}</title>
+                        <style>
+                            @page { size: A4; margin: 0.5in; }
+                            body { font-family: Arial, sans-serif; margin: 0; font-size: 12px; line-height: 1.3; }
+                            .print-section { background: white; height: 100%; }
+                            .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2d5016; padding-bottom: 15px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 18px; }
+                            .print-header p { margin: 2px 0; font-size: 10px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 6px; text-align: left; font-size: 11px; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #666; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printStudentDetails(student) {
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>Student Information</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    
+                    <table class="table" style="margin-bottom: 30px;">
+                        <tr>
+                            <td style="width: 30%; font-weight: bold; background: #f8f9fa;">Student ID:</td>
+                            <td>${student.student_id || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Full Name:</td>
+                            <td>${student.last_name || ''}, ${student.first_name || ''} ${student.middle_name || ''}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">LRN:</td>
+                            <td>${student.lrn || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Grade Level:</td>
+                            <td>${student.grade_level || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Status:</td>
+                            <td>${student.status || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Gender:</td>
+                            <td>${student.gender || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Age:</td>
+                            <td>${student.age || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Birthdate:</td>
+                            <td>${formatDate(student.birthdate) || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">First Year Attended:</td>
+                            <td>${student.first_year_attended || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Contact Information:</td>
+                            <td>${student.contact_info || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Address:</td>
+                            <td>${student.address || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Parent/Guardian:</td>
+                            <td>${student.parent_guardian || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Emergency Contact:</td>
+                            <td>${student.emergency_contact || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Memo:</td>
+                            <td>${student.memo || 'N/A'}</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Student Details - ${student.first_name} ${student.last_name}</title>
+                        <style>
+                            @page { size: A4; margin: 0.5in; }
+                            body { font-family: Arial, sans-serif; margin: 0; font-size: 12px; line-height: 1.3; }
+                            .print-section { background: white; height: 100%; }
+                            .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2d5016; padding-bottom: 15px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 18px; }
+                            .print-header p { margin: 2px 0; font-size: 10px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 6px; text-align: left; font-size: 11px; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #666; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printInvoiceDetails(invoice) {
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            const student = currentData.find(s => s.type === 'student' && s.student_id === invoice.student_id);
+            const studentName = student ? `${student.last_name}, ${student.first_name}` : 'Unknown Student';
+            const items = JSON.parse(invoice.items || '[]');
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>INVOICE</h2>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <table style="width: 100%; margin-bottom: 20px;">
+                            <tr>
+                                <td style="width: 50%;">
+                                    <strong>Invoice Number:</strong> ${invoice.invoice_number || 'N/A'}<br>
+                                    <strong>Date:</strong> ${formatDate(invoice.invoice_date)}<br>
+                                </td>
+                                <td style="width: 50%; text-align: right;">
+                                    <strong>Bill To:</strong><br>
+                                    ${studentName}<br>
+                                    ${student ? (student.address || 'Address not available') : ''}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th style="text-align: right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${items.map(item => `
+                                <tr>
+                                    <td>${item.description || 'N/A'}</td>
+                                    <td style="text-align: right;">₱${(item.amount || 0).toFixed(2)}</td>
+                                </tr>
+                            `).join('')}
+                            <tr style="border-top: 2px solid #2d5016;">
+                                <td style="text-align: right; font-weight: bold; font-size: 16px;">TOTAL:</td>
+                                <td style="text-align: right; font-weight: bold; font-size: 16px;">₱${(invoice.total_amount || 0).toFixed(2)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div style="margin-top: 40px; text-align: center;">
+                        <p><strong>Thank you for your payment!</strong></p>
+                        <p>Please keep this invoice for your records.</p>
+                    </div>
+                    
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Invoice ${invoice.invoice_number}</title>
+                        <style>
+                            @page { size: A4; margin: 0.5in; }
+                            body { font-family: Arial, sans-serif; margin: 0; font-size: 12px; line-height: 1.3; }
+                            .print-section { background: white; height: 100%; }
+                            .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2d5016; padding-bottom: 15px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 18px; }
+                            .print-header p { margin: 2px 0; font-size: 10px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 6px; text-align: left; font-size: 11px; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #666; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printEmployeeDetails(employee) {
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>Employee Payroll Details</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    
+                    <table class="table" style="margin-bottom: 30px;">
+                        <tr>
+                            <td style="width: 30%; font-weight: bold; background: #f8f9fa;">Employee ID:</td>
+                            <td>${employee.employee_id || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Name:</td>
+                            <td>${employee.name || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Position:</td>
+                            <td>${employee.position || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Monthly Rate:</td>
+                            <td>₱${(employee.rate || 0).toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Deductions:</td>
+                            <td>₱${(employee.deductions || 0).toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f8f9fa;">Allowances:</td>
+                            <td>₱${(employee.allowances || 0).toFixed(2)}</td>
+                        </tr>
+                        <tr style="border-top: 2px solid #2d5016;">
+                            <td style="font-weight: bold; background: #2d5016; color: white; font-size: 16px;">NET PAY:</td>
+                            <td style="font-weight: bold; font-size: 16px; background: #f8f9fa;">₱${(employee.net_pay || 0).toFixed(2)}</td>
+                        </tr>
+                    </table>
+                    
+                    <div style="margin-top: 40px;">
+                        <h3>Payroll Computation:</h3>
+                        <table class="table">
+                            <tr>
+                                <td>Basic Salary</td>
+                                <td style="text-align: right;">₱${(employee.rate || 0).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td>Add: Allowances</td>
+                                <td style="text-align: right;">₱${(employee.allowances || 0).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td>Less: Deductions</td>
+                                <td style="text-align: right;">₱${(employee.deductions || 0).toFixed(2)}</td>
+                            </tr>
+                            <tr style="border-top: 2px solid #2d5016;">
+                                <td style="font-weight: bold;">NET PAY</td>
+                                <td style="text-align: right; font-weight: bold;">₱${(employee.net_pay || 0).toFixed(2)}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Payroll Details - ${employee.name}</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 20px; }
+                            .print-section { background: white; }
+                            .print-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #2d5016; padding-bottom: 20px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 24px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #666; }
+                            h3 { color: #2d5016; margin-top: 30px; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Summary Print Functions
+        function printStudents() {
+            const students = currentData.filter(item => item.type === 'student');
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>Student List</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Grade Level</th>
+                                <th>Status</th>
+                                <th>Contact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${students.map(student => `
+                                <tr>
+                                    <td>${student.student_id || 'N/A'}</td>
+                                    <td>${student.last_name || ''}, ${student.first_name || ''}</td>
+                                    <td>${student.grade_level || 'N/A'}</td>
+                                    <td>${student.status || 'N/A'}</td>
+                                    <td>${student.contact_info || 'N/A'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Student List</title>
+                        <style>
+                            @page { size: A4; margin: 0.5in; }
+                            body { font-family: Arial, sans-serif; margin: 0; font-size: 12px; line-height: 1.3; }
+                            .print-section { background: white; height: 100%; }
+                            .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2d5016; padding-bottom: 15px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 18px; }
+                            .print-header p { margin: 2px 0; font-size: 10px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 4px; text-align: left; font-size: 10px; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #666; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printInvoices() {
+            const invoices = currentData.filter(item => item.type === 'invoice');
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>Invoice Summary</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Invoice #</th>
+                                <th>Date</th>
+                                <th>Due Date</th>
+                                <th>Student</th>
+                                <th>Total Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${invoices.map(invoice => {
+                                const student = currentData.find(s => s.type === 'student' && s.student_id === invoice.student_id);
+                                const studentName = student ? `${student.last_name}, ${student.first_name}` : 'Unknown Student';
+                                return `
+                                    <tr>
+                                        <td>${invoice.invoice_number || 'N/A'}</td>
+                                        <td>${formatDate(invoice.invoice_date)}</td>
+                                        <td>${formatDate(invoice.due_date)}</td>
+                                        <td>${studentName}</td>
+                                        <td>₱${(invoice.total_amount || 0).toFixed(2)}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Invoice Summary</title>
+                        <style>
+                            @page { size: A4; margin: 0.5in; }
+                            body { font-family: Arial, sans-serif; margin: 0; font-size: 12px; line-height: 1.3; }
+                            .print-section { background: white; height: 100%; }
+                            .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2d5016; padding-bottom: 15px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 18px; }
+                            .print-header p { margin: 2px 0; font-size: 10px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 4px; text-align: left; font-size: 10px; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #666; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printPayroll() {
+            const employees = currentData.filter(item => item.type === 'employee');
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>Payroll Summary</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Rate</th>
+                                <th>Deductions</th>
+                                <th>Allowances</th>
+                                <th>Net Pay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${employees.map(employee => `
+                                <tr>
+                                    <td>${employee.employee_id || 'N/A'}</td>
+                                    <td>${employee.name || 'N/A'}</td>
+                                    <td>${employee.position || 'N/A'}</td>
+                                    <td>₱${(employee.rate || 0).toFixed(2)}</td>
+                                    <td>₱${(employee.deductions || 0).toFixed(2)}</td>
+                                    <td>₱${(employee.allowances || 0).toFixed(2)}</td>
+                                    <td>₱${(employee.net_pay || 0).toFixed(2)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Payroll Summary</title>
+                        <style>
+                            @page { size: A4; margin: 0.5in; }
+                            body { font-family: Arial, sans-serif; margin: 0; font-size: 12px; line-height: 1.3; }
+                            .print-section { background: white; height: 100%; }
+                            .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2d5016; padding-bottom: 15px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 18px; }
+                            .print-header p { margin: 2px 0; font-size: 10px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 4px; text-align: left; font-size: 10px; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #666; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printInventory() {
+            const inventory = currentData.filter(item => item.type === 'inventory');
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>Inventory Report</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>Supplier</th>
+                                <th>Cost per Unit</th>
+                                <th>Total Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${inventory.map(item => `
+                                <tr>
+                                    <td>${item.item_name || 'N/A'}</td>
+                                    <td>${item.category || 'N/A'}</td>
+                                    <td>${item.quantity || 0}</td>
+                                    <td>${item.supplier || 'N/A'}</td>
+                                    <td>₱${(item.cost || 0).toFixed(2)}</td>
+                                    <td>₱${((item.quantity || 0) * (item.cost || 0)).toFixed(2)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Inventory Report</title>
+                        <style>
+                            @page { size: A4; margin: 0.5in; }
+                            body { font-family: Arial, sans-serif; margin: 0; font-size: 12px; line-height: 1.3; }
+                            .print-section { background: white; height: 100%; }
+                            .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2d5016; padding-bottom: 15px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 18px; }
+                            .print-header p { margin: 2px 0; font-size: 10px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 4px; text-align: left; font-size: 10px; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #666; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printBookkeeping() {
+            const bookkeeping = currentData.filter(item => item.type === 'bookkeeping');
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>Financial Records</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                        <p><em>System developed by: Kristina Basa</em></p>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${bookkeeping.map(entry => `
+                                <tr>
+                                    <td>${formatDate(entry.date)}</td>
+                                    <td>${entry.category || 'N/A'}</td>
+                                    <td>${entry.description || 'N/A'}</td>
+                                    <td>${entry.entry_type || 'N/A'}</td>
+                                    <td>₱${(entry.amount || 0).toFixed(2)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Financial Records</title>
+                        <style>
+                            @page { size: A4; margin: 0.5in; }
+                            body { font-family: Arial, sans-serif; margin: 0; font-size: 12px; line-height: 1.3; }
+                            .print-section { background: white; height: 100%; }
+                            .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2d5016; padding-bottom: 15px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 18px; }
+                            .print-header p { margin: 2px 0; font-size: 10px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 4px; text-align: left; font-size: 10px; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #666; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printReports() {
+            const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+            const students = currentData.filter(item => item.type === 'student' && item.status === 'Active');
+            const bookkeeping = currentData.filter(item => item.type === 'bookkeeping');
+            
+            const currentMonth = new Date().toISOString().slice(0, 7);
+            const currentMonthEntries = bookkeeping.filter(entry => entry.date && entry.date.startsWith(currentMonth));
+            
+            const revenue = currentMonthEntries
+                .filter(entry => entry.entry_type === 'Income')
+                .reduce((sum, entry) => sum + (entry.amount || 0), 0);
+                
+            const expenses = currentMonthEntries
+                .filter(entry => entry.entry_type === 'Expense')
+                .reduce((sum, entry) => sum + (entry.amount || 0), 0);
+            
+            const printContent = `
+                <div class="print-section">
+                    <div class="print-header">
+                        <h1>${config.school_name || defaultConfig.school_name}</h1>
+                        <p>${config.school_address || defaultConfig.school_address}</p>
+                        <p>Phone: ${config.school_phone || defaultConfig.school_phone}</p>
+                        <p>Email: ${config.school_email || defaultConfig.school_email}</p>
+                        <h2>Management Reports</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                        <p><em>System developed by: Kristina Basa</em></p>
+                    </div>
+                    
+                    <h3>Summary Statistics</h3>
+                    <table class="table">
+                        <tr>
+                            <td><strong>Active Students</strong></td>
+                            <td>${students.length}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Monthly Revenue</strong></td>
+                            <td>₱${revenue.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Monthly Expenses</strong></td>
+                            <td>₱${expenses.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Net Profit</strong></td>
+                            <td>₱${(revenue - expenses).toFixed(2)}</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="print-footer">
+                        <p>${config.footer_message || defaultConfig.footer_message}</p>
+                    </div>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Management Reports</title>
+                        <style>
+                            @page { size: A4; margin: 0.5in; }
+                            body { font-family: Arial, sans-serif; margin: 0; font-size: 12px; line-height: 1.3; }
+                            .print-section { background: white; height: 100%; }
+                            .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2d5016; padding-bottom: 15px; }
+                            .print-header h1 { color: #2d5016; margin: 0; font-size: 18px; }
+                            .print-header p { margin: 2px 0; font-size: 10px; }
+                            .table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                            .table th, .table td { border: 1px solid #ddd; padding: 6px; text-align: left; font-size: 11px; }
+                            .table th { background: #2d5016; color: white; }
+                            .print-footer { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #666; }
+                            h3 { color: #2d5016; margin-top: 15px; font-size: 14px; }
+                        </style>
+                    </head>
+                    <body>${printContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Event Listeners
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+
+        document.getElementById('studentForm').addEventListener('submit', saveStudent);
+        document.getElementById('employeeForm').addEventListener('submit', saveEmployee);
+        document.getElementById('invoiceForm').addEventListener('submit', saveInvoice);
+        document.getElementById('payrollForm').addEventListener('submit', savePayroll);
+        document.getElementById('inventoryForm').addEventListener('submit', saveInventory);
+        document.getElementById('bookkeepingForm').addEventListener('submit', saveBookkeeping);
+
+        // Add event listeners for payroll calculation
+        document.getElementById('monthlySalary').addEventListener('input', calculateBiWeeklyRate);
+        document.getElementById('sssDeduction').addEventListener('input', calculateNetPay);
+        document.getElementById('pagibigDeduction').addEventListener('input', calculateNetPay);
+        document.getElementById('philhealthDeduction').addEventListener('input', calculateNetPay);
+        document.getElementById('otherDeductions').addEventListener('input', calculateNetPay);
+        document.getElementById('allowances').addEventListener('input', calculateNetPay);
+
+        // Add event listeners for invoice calculation
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('item-amount')) {
+                calculateInvoiceTotal();
+            }
+        });
+
+        // Initialize the system when page loads
+        document.addEventListener('DOMContentLoaded', initializeSystem);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'998d14d1e23b402d',t:'MTc2MjE4NTU5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
